@@ -2,6 +2,17 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { TRPCReactProvider } from "~/trpc/client";
+import { Figtree, JetBrains_Mono } from "next/font/google";
+import { cn } from "~/lib/utils";
+import { ThemeProvider } from "~/components/providers/theme-provider";
+import { QueryProvider } from "~/components/providers/query-provider";
+
+const jetbrainsMonoHeading = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-heading",
+});
+
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,9 +34,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={cn(
+        "font-sans",
+        figtree.variable,
+        jetbrainsMonoHeading.variable,
+      )}
+      suppressHydrationWarning
+    >
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {" "}
+          <QueryProvider>
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

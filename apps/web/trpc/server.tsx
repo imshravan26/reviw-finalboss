@@ -1,3 +1,4 @@
+// prettier-ignore
 import "server-only"; // <-- ensure this file cannot be imported from the client
 import {
   createTRPCOptionsProxy,
