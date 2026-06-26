@@ -57,7 +57,7 @@ export function DashboardSidebar({
         <DashboardNav />
       </SidebarContent>
       <SidebarFooter>
-        <SidebarSeparator />
+        {/* <SidebarSeparator /> */}
         <SidebarUserButton user={user} plan={plan} />
       </SidebarFooter>
       <SidebarRail />

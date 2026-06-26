@@ -32,6 +32,7 @@ type UserMenuProps = {
   /** `compact` — avatar-only trigger; `profile` — avatar + name in the trigger. */
   variant?: UserMenuTriggerVariant;
   plan?: string;
+  size?: "default" | "sm" | "lg";
   className?: string;
 };
 
@@ -69,6 +70,7 @@ export function UserMenu({
   user,
   variant = "profile",
   plan = DEFAULT_PLAN,
+  size = "default",
   className,
 }: UserMenuProps) {
   const router = useRouter();
@@ -86,43 +88,35 @@ export function UserMenu({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        className={cn(className)}
-        render={
-          variant === "compact" ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full"
-              aria-label="Open account menu"
-            />
-          ) : (
-            <Button
-              variant="ghost"
-              className="h-9 gap-2 px-2"
-              aria-label="Open account menu"
-            />
-          )
-        }
-      >
-        <UserAvatar
-          user={user}
-          size={variant === "compact" ? "default" : "sm"}
-        />
-        {variant === "profile" ? (
-          <>
+      <DropdownMenuTrigger className={cn(className)} asChild>
+        {variant === "compact" ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-sm"
+            aria-label="Open account menu"
+          >
+            <UserAvatar user={user} size={size} />
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            className="h-9 gap-2 px-2"
+            aria-label="Open account menu"
+          >
+            <UserAvatar user={user} size={size} />
             <span className="max-w-32 truncate text-left text-xs font-medium">
               {displayName}
             </span>
             <CaretCircleUpIcon className="size-4 text-muted-foreground" />
-          </>
-        ) : null}
+          </Button>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuGroup>
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="flex items-start gap-2 px-2 py-2">
-              <UserAvatar user={user} />
+              <UserAvatar user={user} size={size} />
               <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <p className="truncate text-xs font-medium">{displayName}</p>
                 {user.email ? (
