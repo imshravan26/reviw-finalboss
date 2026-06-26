@@ -8,6 +8,7 @@ type SidebarUserButtonProps = {
   plan?: string;
 };
 
+// todo: Profile Card Ui
 export function SidebarUserButton({ user, plan }: SidebarUserButtonProps) {
   return (
     <SidebarMenu>
